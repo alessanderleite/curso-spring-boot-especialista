@@ -2,9 +2,6 @@ package com.example.app.rest.dto;
 
 import java.math.BigDecimal;
 
-import lombok.Builder;
-
-@Builder
 public class InformacaoItemPedidoDTO {
 	
 	private String descricaoProduto;
