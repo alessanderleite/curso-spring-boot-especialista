@@ -1,12 +1,15 @@
 package com.example.app.service.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.example.app.domain.entity.Cliente;
 import com.example.app.domain.entity.ItemPedido;
 import com.example.app.domain.entity.Pedido;
 import com.example.app.domain.entity.Produto;
@@ -15,6 +18,7 @@ import com.example.app.domain.repository.Clientes;
 import com.example.app.domain.repository.ItemsPedido;
 import com.example.app.domain.repository.Pedidos;
 import com.example.app.domain.repository.Produtos;
+import com.example.app.exception.PedidoNaoEncontradoException;
 import com.example.app.exception.RegraNegocioException;
 import com.example.app.rest.dto.ItemPedidoDTO;
 import com.example.app.rest.dto.PedidoDTO;
@@ -36,9 +40,24 @@ public class UsuarioServiceImpl implements PedidoService {
 	private ItemsPedido itemsPedidoRepository;
 
 	@Override
-	
+	@Transactional
 	public Pedido salvar(PedidoDTO dto) {
-		return null;
+		Integer idCliente = dto.getCliente();
+		Cliente cliente = clientesRepository
+				.findById(idCliente)
+				.orElseThrow(() -> new RegraNegocioException("Código de cliente inválido."));
+		
+		Pedido pedido = new Pedido();
+		pedido.setTotal(dto.getTotal());
+		pedido.setDataPedido(LocalDate.now());
+		pedido.setCliente(cliente);
+		pedido.setStatus(StatusPedido.REALIZADO);
+		
+		List<ItemPedido> itemsPedidos = converterItems(pedido, dto.getItems());
+		repository.save(pedido);
+		itemsPedidoRepository.saveAll(itemsPedidos);
+		pedido.setItens(itemsPedidos);
+		return pedido;
 	}
 
 	@Override
@@ -47,8 +66,14 @@ public class UsuarioServiceImpl implements PedidoService {
 	}
 
 	@Override
+	@Transactional
 	public void atualizaStatus(Integer id, StatusPedido statusPedido) {
-		
+		repository
+				.findById(id)
+				.map(pedido -> {
+					pedido.setStatus(statusPedido);
+					return repository.save(pedido);
+				}).orElseThrow(() -> new PedidoNaoEncontradoException());
 	}
 
     private List<ItemPedido> converterItems(Pedido pedido, List<ItemPedidoDTO> items){
