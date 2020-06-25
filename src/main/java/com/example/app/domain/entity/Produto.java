@@ -11,13 +11,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
 @Table(name = "produto")
 public class Produto {
@@ -34,4 +27,45 @@ public class Produto {
 	@Column(name = "preco_unitario")
 	@NotNull(message = "{campo.preco.obrigatorio}")
 	private BigDecimal preco;
+
+	public Produto() {
+	}
+
+	public Produto(Integer id, @NotEmpty(message = "{campo.descricao.obrigatorio}") String descricao,
+			@NotNull(message = "{campo.preco.obrigatorio}") BigDecimal preco) {
+		this.id = id;
+		this.descricao = descricao;
+		this.preco = preco;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+	public BigDecimal getPreco() {
+		return preco;
+	}
+
+	public void setPreco(BigDecimal preco) {
+		this.preco = preco;
+	}
+
+	@Override
+	public String toString() {
+		return "Produto [id=" + id + ", descricao=" + descricao + ", preco=" + preco + "]";
+	}
+	
+	
 }
