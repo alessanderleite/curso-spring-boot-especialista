@@ -21,8 +21,7 @@ public class PedidoDTO {
 	public PedidoDTO() {
 	}
 
-	public PedidoDTO(@NotNull(message = "{campo.codigo-cliente.obrigatorio}") Integer cliente,
-			@NotNull(message = "{campo.total-pedido.obrigatorio}") BigDecimal total, List<ItemPedidoDTO> items) {
+	public PedidoDTO(Integer cliente, BigDecimal total, List<ItemPedidoDTO> items) {
 		this.cliente = cliente;
 		this.total = total;
 		this.items = items;
