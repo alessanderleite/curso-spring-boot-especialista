@@ -47,8 +47,7 @@ public class Pedido {
 	public Pedido() {
 	}
 
-	public Pedido(Integer id, Cliente cliente, LocalDate dataPedido, BigDecimal total, StatusPedido status,
-			List<ItemPedido> itens) {
+	public Pedido(Integer id, Cliente cliente, LocalDate dataPedido, BigDecimal total, StatusPedido status, List<ItemPedido> itens) {
 		this.id = id;
 		this.cliente = cliente;
 		this.dataPedido = dataPedido;

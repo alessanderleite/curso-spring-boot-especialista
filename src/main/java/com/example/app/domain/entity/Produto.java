@@ -31,8 +31,7 @@ public class Produto {
 	public Produto() {
 	}
 
-	public Produto(Integer id, @NotEmpty(message = "{campo.descricao.obrigatorio}") String descricao,
-			@NotNull(message = "{campo.preco.obrigatorio}") BigDecimal preco) {
+	public Produto(Integer id, String descricao, BigDecimal preco) {
 		this.id = id;
 		this.descricao = descricao;
 		this.preco = preco;

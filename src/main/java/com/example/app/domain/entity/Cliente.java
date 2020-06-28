@@ -46,9 +46,7 @@ public class Cliente {
 		this.nome = nome;
 	}
 
-	public Cliente(Integer id, @NotEmpty(message = "{campo.nome.obrigatorio}") String nome,
-			@NotEmpty(message = "{campo.cpf.obrigatorio}") @CPF(message = "{campo.cpf.invalido}") String cpf,
-			Set<Pedido> pedidos) {
+	public Cliente(Integer id, String nome, String cpf, Set<Pedido> pedidos) {
 		this.id = id;
 		this.nome = nome;
 		this.cpf = cpf;
