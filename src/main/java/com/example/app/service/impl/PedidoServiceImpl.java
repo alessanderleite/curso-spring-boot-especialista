@@ -62,6 +62,7 @@ public class PedidoServiceImpl implements PedidoService {
 	}
 
 	@Override
+	@Transactional
 	public void atualizaStatus(Integer id, StatusPedido statusPedido) {
 		repository
 				.findById(id)
