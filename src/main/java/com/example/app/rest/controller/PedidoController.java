@@ -79,11 +79,11 @@ public class PedidoController {
 			return Collections.emptyList();
 		}
 		return itens.stream().map(item -> {
-			InformacaoItemPedidoDTO infoPedido = new InformacaoItemPedidoDTO(
-					item.getProduto().getDescricao(), 
-					item.getProduto().getPreco(),
-					item.getQuantidade());
-					return infoPedido;
+			InformacaoItemPedidoDTO infoPedido = new InformacaoItemPedidoDTO();
+			infoPedido.setDescricaoProduto(item.getProduto().getDescricao()); 
+			infoPedido.setPrecoUnitario(item.getProduto().getPreco());
+			infoPedido.setQuantidade(item.getQuantidade());
+			return infoPedido;
 		}).collect(Collectors.toList());
 		
 	}
